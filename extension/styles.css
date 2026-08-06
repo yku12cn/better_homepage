@@ -42,7 +42,6 @@ body {
   margin: 0 auto;
 }
 
-/* Header & Settings Menu */
 .header {
   display: flex;
   justify-content: space-between;
@@ -109,7 +108,6 @@ body {
   background: var(--bg-color);
 }
 
-/* Generic Search Bar */
 .search-wrapper {
   flex: 1;
   max-width: 650px;
@@ -144,7 +142,6 @@ body {
   outline: none;
 }
 
-/* Folder Sections */
 .folder-section {
   background: transparent;
   margin-bottom: 2.5rem;
@@ -196,14 +193,14 @@ body {
   visibility: visible;
 }
 
-/* Grid & Shortcut Cards */
 .shortcuts-grid {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   min-height: 90px;
   padding: 4px;
   position: relative;
+  justify-content: flex-start;
 }
 
 .shortcut-card {
@@ -223,6 +220,9 @@ body {
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow);
   position: relative;
+  flex: 1 1 calc(10% - 16px); 
+  min-width: 90px; 
+  max-width: calc(10% - 16px); 
 }
 
 .shortcut-card:hover {
@@ -257,7 +257,6 @@ body {
   width: 100%;
 }
 
-/* Add Shortcut Card */
 .add-shortcut-card {
   aspect-ratio: 1 / 1;
   background: transparent;
@@ -272,6 +271,9 @@ body {
   opacity: 0.35;
   transition: all 0.2s ease;
   box-shadow: none;
+  flex: 1 1 calc(10% - 16px); 
+  min-width: 90px; 
+  max-width: calc(10% - 16px); 
 }
 
 .add-shortcut-card:hover {
@@ -283,7 +285,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Drag & Drop Indicators */
 .shortcut-card.drop-indicator-left::before {
   content: '';
   position: absolute;
@@ -312,7 +313,6 @@ body {
   pointer-events: none;
 }
 
-/* Add Section Zone */
 .add-folder-zone {
   display: flex;
   justify-content: center;
@@ -349,7 +349,6 @@ body {
   box-shadow: var(--shadow-hover);
 }
 
-/* Context Menu & Modals */
 .context-menu {
   position: absolute;
   background: var(--surface-color);
@@ -429,7 +428,6 @@ body {
   gap: 8px;
 }
 
-/* Category-Based Emoji Picker Styles */
 .emoji-categories {
   display: flex;
   gap: 6px;
