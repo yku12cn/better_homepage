@@ -20,6 +20,8 @@
 - ⚡ **High Performance & Secure**: Light weight, self-contained, local realization.
 
 ---
+## Get It From Chrome Store
+[**Better Homepage**](https://chromewebstore.google.com/detail/hfigffcbjhiibelilniondghmoaafcip)
 
 ## Installation (Developer / Unpacked Mode)
 
