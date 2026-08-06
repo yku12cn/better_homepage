@@ -141,7 +141,7 @@ function setupMenuAndModals() {
         const importedData = JSON.parse(event.target.result);
         if (importedData && Array.isArray(importedData.folders)) {
           appState = importedData;
-          applyTheme(appState.theme || 'light');
+          applyTheme(appState.theme || 'dark');
           saveState();
           updateSearchEngineFavicon();
           render();
