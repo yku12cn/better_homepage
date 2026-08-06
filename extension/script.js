@@ -51,6 +51,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupAddFolderCursorDetection();
 });
 
+function getBrowserCachedFavicon(pageUrl, size = 32) {
+  const url = new URL(chrome.runtime.getURL("/_favicon/"));
+  url.searchParams.set("pageUrl", pageUrl);
+  url.searchParams.set("size", size.toString());
+  return url.toString();
+}
+
 async function loadState() {
   return new Promise((resolve) => {
     chrome.storage.local.get(['better_homepage_data'], (result) => {
@@ -78,8 +85,7 @@ function getActiveEngine() {
 function updateSearchEngineFavicon() {
   const engine = getActiveEngine();
   const iconEl = document.getElementById('searchEngineIcon');
-  const domain = getDomain(engine.searchUrl || 'https://www.google.com');
-  iconEl.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+  iconEl.src = getBrowserCachedFavicon(engine.searchUrl);
 }
 
 function setupSearchForm() {
@@ -381,8 +387,7 @@ function createShortcutCard(sc, folderId) {
   } else if (sc.iconType === 'custom' && sc.iconValue) {
     iconHTML = `<div class="shortcut-icon"><img src="${sc.iconValue}" alt="icon"></div>`;
   } else {
-    const domain = getDomain(sc.url);
-    const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+    const faviconUrl = getBrowserCachedFavicon(sc.url);
     iconHTML = `<div class="shortcut-icon"><img src="${faviconUrl}" alt="icon"></div>`;
   }
 
@@ -398,10 +403,6 @@ function createShortcutCard(sc, folderId) {
   });
 
   return card;
-}
-
-function getDomain(urlStr) {
-  try { return new URL(urlStr).hostname; } catch { return urlStr; }
 }
 
 function addShortcut(folderId) {
