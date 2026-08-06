@@ -38,6 +38,7 @@ const DEFAULT_STATE = {
 let appState = { ...DEFAULT_STATE };
 let activeContextMenuTarget = null;
 let draggedItem = null;
+let draggedFolderId = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadState();
@@ -322,12 +323,14 @@ function render() {
   appState.folders.forEach((folder) => {
     const folderEl = document.createElement('section');
     folderEl.className = 'folder-section';
+    folderEl.draggable = true;
 
     const safeFolderId = escapeHtml(folder.id);
     const safeFolderTitle = escapeHtml(folder.title);
 
     folderEl.innerHTML = `
       <div class="folder-header">
+        <span class="folder-drag-handle" title="Drag to reorder sections">⠿</span>
         <input class="folder-title" value="${safeFolderTitle}" data-folder-id="${safeFolderId}">
         <button class="delete-folder-btn" data-folder-id="${safeFolderId}" title="Delete Folder">✕</button>
       </div>
@@ -348,9 +351,53 @@ function render() {
     grid.appendChild(addCard);
 
     setupGridDropZone(grid, folder.id);
+
+    folderEl.addEventListener('dragstart', (e) => {
+      if (e.target.closest('.shortcut-card')) return;
+
+      draggedFolderId = folder.id;
+      folderEl.classList.add('dragging-folder');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+
+    folderEl.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (draggedItem || !draggedFolderId || draggedFolderId === folder.id) return;
+
+      folderEl.classList.add('folder-drop-target');
+    });
+
+    folderEl.addEventListener('dragleave', () => {
+      folderEl.classList.remove('folder-drop-target');
+    });
+
+    folderEl.addEventListener('drop', (e) => {
+      e.preventDefault();
+      folderEl.classList.remove('folder-drop-target');
+
+      if (draggedItem || !draggedFolderId || draggedFolderId === folder.id) return;
+
+      const sourceIdx = appState.folders.findIndex(f => f.id === draggedFolderId);
+      const targetIdx = appState.folders.findIndex(f => f.id === folder.id);
+
+      if (sourceIdx !== -1 && targetIdx !== -1) {
+        const [movedFolder] = appState.folders.splice(sourceIdx, 1);
+        appState.folders.splice(targetIdx, 0, movedFolder);
+        saveState();
+        render();
+      }
+      draggedFolderId = null;
+    });
+
+    folderEl.addEventListener('dragend', () => {
+      folderEl.classList.remove('dragging-folder');
+      draggedFolderId = null;
+    });
+
     container.appendChild(folderEl);
   });
 
+  // Event listeners for inputs and delete buttons (unchanged)
   document.querySelectorAll('.folder-title').forEach(input => {
     input.addEventListener('change', (e) => {
       const folder = appState.folders.find(f => f.id === e.target.dataset.folderId);
@@ -398,7 +445,8 @@ function createShortcutCard(sc, folderId) {
     openContextMenu(e.clientX, e.clientY, folderId, sc.id);
   });
 
-  card.addEventListener('dragstart', () => {
+  card.addEventListener('dragstart', (e) => {
+    e.stopPropagation();
     draggedItem = { folderId, shortcutId: sc.id };
   });
 

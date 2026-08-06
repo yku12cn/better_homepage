@@ -145,6 +145,7 @@ body {
 .folder-section {
   background: transparent;
   margin-bottom: 2.5rem;
+  position: relative;
 }
 
 .folder-header {
@@ -154,6 +155,48 @@ body {
   margin-bottom: 1.25rem;
   border-bottom: 2px solid var(--border-color);
   padding-bottom: 6px;
+}
+
+.folder-header:hover .folder-drag-handle {
+  opacity: 1;
+}
+
+.folder-drag-handle {
+  cursor: grab;
+  color: var(--secondary-text);
+  font-size: 1.2rem;
+  user-select: none;
+  opacity: 0.5;
+  transition: opacity 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.folder-drag-handle:hover {
+  color: var(--text-color);
+}
+
+.folder-drag-handle:active {
+  cursor: grabbing;
+}
+
+.folder-drop-target::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--primary-color);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.dragging-folder {
+  opacity: 0.4;
 }
 
 .folder-title {
