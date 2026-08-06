@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Tab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="app-container">
+    <header class="header">
+      <div class="header-spacer"></div>
+
+      <form id="searchForm" class="search-wrapper">
+        <div class="search-container">
+          <img id="searchEngineIcon" class="search-engine-icon" src="" alt="Engine Icon">
+          <input type="text" id="searchInput" class="search-input" placeholder="Search the web..." autocomplete="off"
+            autofocus>
+        </div>
+      </form>
+
+      <div class="menu-container">
+        <button id="menuBtn" class="btn-icon" title="Menu">⋮</button>
+        <div id="settingsDropdown" class="dropdown-menu hidden">
+          <ul>
+            <li id="menuThemeToggle">Toggle Theme</li>
+            <li id="menuSearchConfig">Customize Search Engine</li>
+            <li id="menuExport">Export Configuration</li>
+            <li id="menuImport">Import Configuration</li>
+          </ul>
+        </div>
+        <input type="file" id="importFileInput" accept=".json" class="hidden">
+      </div>
+    </header>
+
+    <main id="foldersContainer" class="folders-container"></main>
+
+    <div id="addFolderZone" class="add-folder-zone">
+      <button id="addFolderBtn" class="btn-faint-add" title="Add New Section">+ Add Section</button>
+    </div>
+  </div>
+
+  <div id="contextMenu" class="context-menu hidden">
+    <ul>
+      <li id="cmEdit">Edit</li>
+      <li id="cmDelete" class="danger">Delete</li>
+    </ul>
+  </div>
+
+  <div id="editModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Edit Shortcut</h3>
+
+      <label for="editUrl">URL</label>
+      <input type="url" id="editUrl" placeholder="https://example.com">
+
+      <label for="editLabel">Label</label>
+      <input type="text" id="editLabel" placeholder="My Bookmark">
+
+      <label>Icon Style</label>
+      <div class="icon-option-group">
+        <label><input type="radio" name="iconType" value="default" checked> Favicon</label>
+        <label><input type="radio" name="iconType" value="emoji"> Emoji</label>
+        <label><input type="radio" name="iconType" value="custom"> Custom Image</label>
+      </div>
+
+      <div id="emojiInputGroup" class="icon-subgroup hidden">
+        <div id="emojiCategories" class="emoji-categories"></div>
+        <div id="emojiGrid" class="emoji-grid"></div>
+      </div>
+
+      <div id="imageInputGroup" class="icon-subgroup hidden">
+        <input type="file" id="editImageFile" accept="image/*">
+      </div>
+
+      <div class="modal-actions">
+        <button id="modalCancelBtn" class="btn btn-secondary">Cancel</button>
+        <button id="modalSaveBtn" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="searchEngineModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Search Engine Configuration</h3>
+
+      <label for="presetSearchSelect">Engine Selection</label>
+      <select id="presetSearchSelect" class="modal-select">
+        <option value="google">Google</option>
+        <option value="bing">Bing</option>
+        <option value="duckduckgo">DuckDuckGo</option>
+        <option value="custom">Custom Engine</option>
+      </select>
+
+      <div id="customSearchFields" class="hidden">
+        <label for="seName">Engine Name</label>
+        <input type="text" id="seName" placeholder="My Search Engine">
+
+        <label for="seUrl">Search Query URL (Use %s for query placeholder)</label>
+        <input type="text" id="seUrl" placeholder="https://www.google.com/search?q=%s">
+      </div>
+
+      <div class="modal-actions">
+        <button id="seCancelBtn" class="btn btn-secondary">Cancel</button>
+        <button id="seSaveBtn" class="btn btn-primary">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

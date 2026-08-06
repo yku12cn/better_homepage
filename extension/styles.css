@@ -1,0 +1,527 @@
+:root {
+  --bg-color: #f8f9fa;
+  --surface-color: #ffffff;
+  --text-color: #1f1f1f;
+  --secondary-text: #5f6368;
+  --border-color: #e0e0e0;
+  --primary-color: #1a73e8;
+  --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 18px rgba(0, 0, 0, 0.15);
+  --radius: 12px;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --surface-color: #1e1e1e;
+  --text-color: #e3e3e3;
+  --secondary-text: #9aa0a6;
+  --border-color: #333333;
+  --primary-color: #1a73e8;
+  --shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+  padding: 2rem;
+  padding-bottom: 5rem;
+  min-height: 100vh;
+}
+
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header & Settings Menu */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.header-spacer {
+  width: 40px;
+}
+
+.menu-container {
+  position: relative;
+}
+
+.btn-icon {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.1s;
+}
+
+.btn-icon:hover {
+  transform: scale(1.05);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--shadow-hover);
+  z-index: 1000;
+  width: 230px;
+  overflow: hidden;
+}
+
+.dropdown-menu ul {
+  list-style: none;
+}
+
+.dropdown-menu li {
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: background 0.15s;
+}
+
+.dropdown-menu li:hover {
+  background: var(--bg-color);
+}
+
+/* Generic Search Bar */
+.search-wrapper {
+  flex: 1;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background: var(--surface-color);
+  border-radius: 28px;
+  padding: 4px 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+}
+
+.search-engine-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  margin-right: 10px;
+  object-fit: contain;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 8px;
+  font-size: 1rem;
+  color: var(--text-color);
+  outline: none;
+}
+
+/* Folder Sections */
+.folder-section {
+  background: transparent;
+  margin-bottom: 2.5rem;
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 6px;
+}
+
+.folder-title {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--text-color);
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.folder-title:focus {
+  background: var(--surface-color);
+}
+
+.delete-folder-btn {
+  width: 24px;
+  height: 24px;
+  font-size: 0.8rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  border: none;
+  background: transparent;
+  color: var(--secondary-text);
+  cursor: pointer;
+}
+
+.delete-folder-btn:hover {
+  color: #d93025;
+}
+
+.folder-header:hover .delete-folder-btn {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Grid & Shortcut Cards */
+.shortcuts-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 16px;
+  min-height: 90px;
+  padding: 4px;
+  position: relative;
+}
+
+.shortcut-card {
+  aspect-ratio: 1 / 1;
+  background: var(--surface-color);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  text-decoration: none;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.shortcut-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.shortcut-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  margin-bottom: 6px;
+}
+
+.shortcut-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.shortcut-label {
+  font-size: 0.975rem;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/* Add Shortcut Card */
+.add-shortcut-card {
+  aspect-ratio: 1 / 1;
+  background: transparent;
+  border: 1px dashed transparent;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.95rem;
+  color: var(--secondary-text);
+  cursor: pointer;
+  opacity: 0.35;
+  transition: all 0.2s ease;
+  box-shadow: none;
+}
+
+.add-shortcut-card:hover {
+  opacity: 1;
+  background: var(--surface-color);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* Drag & Drop Indicators */
+.shortcut-card.drop-indicator-left::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--primary-color);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.shortcut-card.drop-indicator-right::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--primary-color);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Add Section Zone */
+.add-folder-zone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 0 3rem 0;
+  min-height: 80px;
+}
+
+.btn-faint-add {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease, color 0.2s, border-color 0.2s;
+  background: var(--surface-color);
+  color: var(--secondary-text);
+  border: 1px solid var(--border-color);
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  pointer-events: none;
+}
+
+.btn-faint-add.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.btn-faint-add:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Context Menu & Modals */
+.context-menu {
+  position: absolute;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--shadow-hover);
+  z-index: 1000;
+  width: 160px;
+}
+
+.context-menu ul {
+  list-style: none;
+}
+
+.context-menu li {
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.context-menu li:hover {
+  background: var(--bg-color);
+}
+
+.context-menu li.danger {
+  color: #d93025;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: var(--surface-color);
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--shadow-hover);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="url"],
+.modal-select {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  outline: none;
+  width: 100%;
+}
+
+.icon-option-group {
+  display: flex;
+  gap: 12px;
+  font-size: 0.85rem;
+}
+
+.icon-subgroup {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Category-Based Emoji Picker Styles */
+.emoji-categories {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.category-tab {
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: all 0.15s ease;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.category-tab:hover {
+  background: var(--border-color);
+}
+
+.category-tab.active {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow);
+}
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-color);
+}
+
+.emoji-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  height: 38px;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.emoji-item:hover {
+  background: var(--border-color);
+  transform: scale(1.15);
+}
+
+.emoji-item.selected {
+  background: var(--primary-color);
+  box-shadow: var(--shadow);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--border-color);
+  color: var(--text-color);
+}
+
+.hidden {
+  display: none !important;
+}

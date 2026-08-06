@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Better Homepage - Marquee Promo Tile (1400x560)</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background: #0d0f12;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Exact Chrome Web Store Marquee Tile Size */
+    .promo-banner {
+      width: 1400px;
+      height: 560px;
+      background: linear-gradient(135deg, #12151c 0%, #1a1f2c 100%);
+      border-radius: 16px;
+      display: flex;
+      padding: 48px 56px;
+      gap: 48px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Left Side: Mockup Preview */
+    .preview-section {
+      flex: 1.25;
+      background: #181c26;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .search-mock {
+      background: #232936;
+      border-radius: 24px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #8b95a5;
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .section-title {
+      color: #6c788a;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .tile-card {
+      aspect-ratio: 1;
+      background: #232936;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .tile-icon {
+      font-size: 22px;
+      font-weight: bold;
+      color: #8ab4f8;
+    }
+
+    .tile-label {
+      font-size: 10px;
+      color: #a0aec0;
+      font-weight: 500;
+    }
+
+    /* Right Side: Extension Branding */
+    .info-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #ffffff;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .brand-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #ff9800, #f57c00);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 6px 16px rgba(245, 124, 0, 0.4);
+    }
+
+    .brand-title {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #ffffff, #8ab4f8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-subtitle {
+      font-size: 18px;
+      color: #9aa0a6;
+      margin-bottom: 28px;
+      font-weight: 400;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: #e3e3e3;
+    }
+
+    .feature-bullet {
+      width: 28px;
+      height: 28px;
+      background: rgba(138, 180, 248, 0.12);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #8ab4f8;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="promo-banner">
+    <div class="preview-section">
+      <div class="search-mock">
+        <span>🔍</span>
+        <span>Search the web...</span>
+      </div>
+
+      <div>
+        <div class="section-title">Main Shortcuts</div>
+        <div class="tiles-grid">
+          <div class="tile-card"><span class="tile-icon">G</span><span class="tile-label">Google</span></div>
+          <div class="tile-card"><span class="tile-icon" style="color:#ff0000;">▶</span><span
+              class="tile-label">YouTube</span></div>
+          <div class="tile-card"><span class="tile-icon" style="color:#fff;">🐙</span><span
+              class="tile-label">GitHub</span></div>
+          <div class="tile-card"><span class="tile-icon">⚡</span><span class="tile-label">Daily</span></div>
+          <div class="tile-card"><span class="tile-icon">🚀</span><span class="tile-label">Launch</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">Social & Workspace</div>
+        <div class="tiles-grid">
+          <div class="tile-card"><span class="tile-icon">💬</span><span class="tile-label">Chat</span></div>
+          <div class="tile-card"><span class="tile-icon">📷</span><span class="tile-label">Photos</span></div>
+          <div class="tile-card"><span class="tile-icon">🐦</span><span class="tile-label">Twitter</span></div>
+          <div class="tile-card"><span class="tile-icon">✉️</span><span class="tile-label">Mail</span></div>
+          <div class="tile-card"><span class="tile-icon">🛠️</span><span class="tile-label">DevTools</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section">
+<div class="brand-header">
+      <img src="./icon48.png" alt="Better Homepage Icon"> <h1 class="brand-title">Better Homepage</h1>
+    </div>
+      <p class="brand-subtitle">A Clean & Customizable New Tab Page</p>
+
+      <ul class="feature-list">
+        <li class="feature-item">
+          <div class="feature-bullet">📁</div> Custom Sections & Drag-and-Drop Re-ordeing
+        </li>
+        <li class="feature-item">
+          <div class="feature-bullet">😃</div> Category Emoji & Custom Image Icon Picker
+        </li>
+        <li class="feature-item">
+          <div class="feature-bullet">🌙</div> Sleek Dark & Light Mode Theme Support
+        </li>
+        <li class="feature-item">
+          <div class="feature-bullet">🔍</div> Custom Search Engine Configuration
+        </li>
+        <li class="feature-item">
+          <div class="feature-bullet">📥</div> Full JSON Export & Import Configuration
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+
+</html>
