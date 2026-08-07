@@ -8,6 +8,11 @@
   --shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.7);
   --radius: 12px;
+
+  --block-size: 90px;
+  --icon-size: 44px;
+  --label-size: 15px;
+  --folder-gap: 40px;
 }
 
 [data-theme="light"] {
@@ -144,8 +149,9 @@ body {
 
 .folder-section {
   background: transparent;
-  margin-bottom: 2.5rem;
+  margin-bottom: var(--folder-gap);
   position: relative;
+  transition: transform 0.3s ease, margin 0.3s ease;
 }
 
 .folder-header {
@@ -181,6 +187,23 @@ body {
   cursor: grabbing;
 }
 
+@keyframes dropPulse {
+  0% {
+    opacity: 0.5;
+    box-shadow: 0 0 4px var(--primary-color);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 12px var(--primary-color);
+  }
+
+  100% {
+    opacity: 0.5;
+    box-shadow: 0 0 4px var(--primary-color);
+  }
+}
+
 .folder-drop-target::before {
   content: '';
   position: absolute;
@@ -190,13 +213,132 @@ body {
   height: 4px;
   background-color: var(--primary-color);
   border-radius: 2px;
-  box-shadow: 0 0 8px var(--primary-color);
+  animation: dropPulse 1.2s infinite;
   pointer-events: none;
   z-index: 10;
 }
 
 .dragging-folder {
   opacity: 0.4;
+  transform: scale(0.98);
+}
+
+.shortcuts-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  min-height: 90px;
+  padding: 4px;
+  position: relative;
+  justify-content: flex-start;
+}
+
+.shortcut-card,
+.add-shortcut-card {
+  aspect-ratio: 1 / 1;
+  background: var(--surface-color);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  text-decoration: none;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, opacity 0.25s ease;
+  user-select: none;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  position: relative;
+  flex: 1 1 calc(10% - 16px);
+  min-width: var(--block-size);
+  max-width: calc(10% - 16px);
+}
+
+.shortcut-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.dragging-item {
+  opacity: 0.3;
+  transform: scale(0.9) !important;
+}
+
+.shortcut-icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--icon-size) * 0.8);
+  margin-bottom: 6px;
+  transition: width 0.2s, height 0.2s, font-size 0.2s;
+}
+
+.shortcut-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.shortcut-label {
+  font-size: var(--label-size);
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  transition: font-size 0.2s;
+}
+
+.add-shortcut-card {
+  background: transparent;
+  border: 1px dashed transparent;
+  font-size: 1.95rem;
+  color: var(--secondary-text);
+  opacity: 0.35;
+  box-shadow: none;
+}
+
+.add-shortcut-card:hover {
+  opacity: 1;
+  background: var(--surface-color);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.shortcut-card.drop-indicator-left::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+  animation: dropPulse 1.2s infinite;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.shortcut-card.drop-indicator-right::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+  animation: dropPulse 1.2s infinite;
+  z-index: 10;
+  pointer-events: none;
 }
 
 .folder-title {
@@ -234,126 +376,6 @@ body {
 .folder-header:hover .delete-folder-btn {
   opacity: 1;
   visibility: visible;
-}
-
-.shortcuts-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  min-height: 90px;
-  padding: 4px;
-  position: relative;
-  justify-content: flex-start;
-}
-
-.shortcut-card {
-  aspect-ratio: 1 / 1;
-  background: var(--surface-color);
-  border-radius: var(--radius);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  text-decoration: none;
-  color: var(--text-color);
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  user-select: none;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow);
-  position: relative;
-  flex: 1 1 calc(10% - 16px); 
-  min-width: 90px; 
-  max-width: calc(10% - 16px); 
-}
-
-.shortcut-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
-}
-
-.shortcut-icon {
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 36px;
-  margin-bottom: 6px;
-}
-
-.shortcut-icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 4px;
-}
-
-.shortcut-label {
-  font-size: 0.975rem;
-  font-weight: 500;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-}
-
-.add-shortcut-card {
-  aspect-ratio: 1 / 1;
-  background: transparent;
-  border: 1px dashed transparent;
-  border-radius: var(--radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.95rem;
-  color: var(--secondary-text);
-  cursor: pointer;
-  opacity: 0.35;
-  transition: all 0.2s ease;
-  box-shadow: none;
-  flex: 1 1 calc(10% - 16px); 
-  min-width: 90px; 
-  max-width: calc(10% - 16px); 
-}
-
-.add-shortcut-card:hover {
-  opacity: 1;
-  background: var(--surface-color);
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-2px);
-}
-
-.shortcut-card.drop-indicator-left::before {
-  content: '';
-  position: absolute;
-  left: -10px;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background-color: var(--primary-color);
-  border-radius: 2px;
-  box-shadow: 0 0 8px var(--primary-color);
-  z-index: 10;
-  pointer-events: none;
-}
-
-.shortcut-card.drop-indicator-right::after {
-  content: '';
-  position: absolute;
-  right: -10px;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background-color: var(--primary-color);
-  border-radius: 2px;
-  box-shadow: 0 0 8px var(--primary-color);
-  z-index: 10;
-  pointer-events: none;
 }
 
 .add-folder-zone {
@@ -456,6 +478,12 @@ body {
   color: var(--text-color);
   outline: none;
   width: 100%;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 8px 0 16px 0;
+  cursor: pointer;
 }
 
 .icon-option-group {

@@ -22,6 +22,12 @@ const DEFAULT_STATE = {
   theme: 'dark',
   searchEngineKey: 'google',
   customSearchEngine: { name: '', searchUrl: '' },
+  visuals: {
+    blockSize: 90,
+    iconSize: 44,
+    labelSize: 15,
+    folderGap: 40
+  },
   folders: [
     {
       id: 'folder-1',
@@ -42,6 +48,7 @@ let draggedFolderId = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadState();
+  applyVisuals(appState.visuals || DEFAULT_STATE.visuals);
   applyTheme(appState.theme);
   setupMenuAndModals();
   setupSearchForm();
@@ -51,6 +58,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupGlobalEvents();
   setupAddFolderCursorDetection();
 });
+
+function applyVisuals(visuals) {
+  const root = document.documentElement;
+  root.style.setProperty('--block-size', `${visuals.blockSize}px`);
+  root.style.setProperty('--icon-size', `${visuals.iconSize}px`);
+  root.style.setProperty('--label-size', `${visuals.labelSize}px`);
+  root.style.setProperty('--folder-gap', `${visuals.folderGap}px`);
+}
 
 function getBrowserCachedFavicon(pageUrl, size = 32) {
   const url = new URL(chrome.runtime.getURL("/_favicon/"));
@@ -110,6 +125,7 @@ function setupMenuAndModals() {
   const menuBtn = document.getElementById('menuBtn');
   const dropdown = document.getElementById('settingsDropdown');
   const importFileInput = document.getElementById('importFileInput');
+  const vsModal = document.getElementById('visualSettingsModal');
 
   menuBtn.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -121,6 +137,48 @@ function setupMenuAndModals() {
     applyTheme(appState.theme);
     saveState();
     dropdown.classList.add('hidden');
+  });
+
+  document.getElementById('menuVisualSettings').addEventListener('click', () => {
+    const vis = appState.visuals || DEFAULT_STATE.visuals;
+    document.getElementById('vsBlockSize').value = vis.blockSize;
+    document.getElementById('vsIconSize').value = vis.iconSize;
+    document.getElementById('vsLabelSize').value = vis.labelSize;
+    document.getElementById('vsFolderGap').value = vis.folderGap;
+
+    ['BlockSize', 'IconSize', 'LabelSize', 'FolderGap'].forEach(key => {
+      document.getElementById(`val${key}`).textContent = vis[key.charAt(0).toLowerCase() + key.slice(1)];
+    });
+
+    dropdown.classList.add('hidden');
+    vsModal.classList.remove('hidden');
+  });
+
+  ['BlockSize', 'IconSize', 'LabelSize', 'FolderGap'].forEach(key => {
+    const inputKey = key.charAt(0).toLowerCase() + key.slice(1);
+    document.getElementById(`vs${key}`).addEventListener('input', (e) => {
+      document.getElementById(`val${key}`).textContent = e.target.value;
+      document.documentElement.style.setProperty(`--${inputKey.replace(/[A-Z]/g, m => "-" + m.toLowerCase())}`, `${e.target.value}px`);
+    });
+  });
+
+  document.getElementById('vsResetBtn').addEventListener('click', () => {
+    const defaultVis = DEFAULT_STATE.visuals;
+    appState.visuals = { ...defaultVis };
+    applyVisuals(defaultVis);
+    saveState();
+    vsModal.classList.add('hidden');
+  });
+
+  document.getElementById('vsSaveBtn').addEventListener('click', () => {
+    appState.visuals = {
+      blockSize: parseInt(document.getElementById('vsBlockSize').value, 10),
+      iconSize: parseInt(document.getElementById('vsIconSize').value, 10),
+      labelSize: parseInt(document.getElementById('vsLabelSize').value, 10),
+      folderGap: parseInt(document.getElementById('vsFolderGap').value, 10)
+    };
+    saveState();
+    vsModal.classList.add('hidden');
   });
 
   document.getElementById('menuExport').addEventListener('click', () => {
@@ -149,6 +207,7 @@ function setupMenuAndModals() {
         if (importedData && Array.isArray(importedData.folders)) {
           appState = importedData;
           applyTheme(appState.theme || 'dark');
+          applyVisuals(appState.visuals || DEFAULT_STATE.visuals);
           saveState();
           updateSearchEngineFavicon();
           render();
@@ -397,7 +456,6 @@ function render() {
     container.appendChild(folderEl);
   });
 
-  // Event listeners for inputs and delete buttons (unchanged)
   document.querySelectorAll('.folder-title').forEach(input => {
     input.addEventListener('change', (e) => {
       const folder = appState.folders.find(f => f.id === e.target.dataset.folderId);
@@ -448,6 +506,15 @@ function createShortcutCard(sc, folderId) {
   card.addEventListener('dragstart', (e) => {
     e.stopPropagation();
     draggedItem = { folderId, shortcutId: sc.id };
+
+    setTimeout(() => {
+      card.classList.add('dragging-item');
+    }, 0);
+  });
+
+  card.addEventListener('dragend', () => {
+    card.classList.remove('dragging-item');
+    draggedItem = null;
   });
 
   return card;

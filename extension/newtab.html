@@ -26,6 +26,7 @@
         <div id="settingsDropdown" class="dropdown-menu hidden">
           <ul>
             <li id="menuThemeToggle">Toggle Theme</li>
+            <li id="menuVisualSettings">Visual Tweaks</li>
             <li id="menuSearchConfig">Customize Search Engine</li>
             <li id="menuExport">Export Configuration</li>
             <li id="menuImport">Import Configuration</li>
@@ -105,6 +106,29 @@
       <div class="modal-actions">
         <button id="seCancelBtn" class="btn btn-secondary">Cancel</button>
         <button id="seSaveBtn" class="btn btn-primary">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="visualSettingsModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Visual Tweaks</h3>
+
+      <label for="vsBlockSize">Block Size (<span id="valBlockSize">90</span>px)</label>
+      <input type="range" id="vsBlockSize" min="60" max="150" value="90">
+
+      <label for="vsIconSize">Icon Size (<span id="valIconSize">44</span>px)</label>
+      <input type="range" id="vsIconSize" min="24" max="80" value="44">
+
+      <label for="vsLabelSize">Text Size (<span id="valLabelSize">15</span>px)</label>
+      <input type="range" id="vsLabelSize" min="10" max="24" value="15">
+
+      <label for="vsFolderGap">Folder Gap (<span id="valFolderGap">40</span>px)</label>
+      <input type="range" id="vsFolderGap" min="10" max="100" value="40">
+
+      <div class="modal-actions">
+        <button id="vsResetBtn" class="btn btn-secondary">Reset to Default</button>
+        <button id="vsSaveBtn" class="btn btn-primary">Done</button>
       </div>
     </div>
   </div>
