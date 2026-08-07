@@ -45,6 +45,8 @@ let appState = { ...DEFAULT_STATE };
 let activeContextMenuTarget = null;
 let draggedItem = null;
 let draggedFolderId = null;
+let draggedFolderEl = null;
+let draggedCardEl = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadState();
@@ -411,46 +413,88 @@ function render() {
 
     setupGridDropZone(grid, folder.id);
 
+    folderEl.dataset.folderId = folder.id;
     folderEl.addEventListener('dragstart', (e) => {
       if (e.target.closest('.shortcut-card')) return;
-
       draggedFolderId = folder.id;
-      folderEl.classList.add('dragging-folder');
+      draggedFolderEl = folderEl;
       e.dataTransfer.effectAllowed = 'move';
+      setTimeout(() => {
+        folderEl.classList.add('dragging-folder');
+      }, 0);
     });
 
     folderEl.addEventListener('dragover', (e) => {
       e.preventDefault();
-      if (draggedItem || !draggedFolderId || draggedFolderId === folder.id) return;
+      e.dataTransfer.dropEffect = 'move';
+      if (draggedItem || !draggedFolderEl || draggedFolderEl === folderEl) return;
+      const items = Array.from(container.children);
+      const draggedIdx = items.indexOf(draggedFolderEl);
+      const targetIdx = items.indexOf(folderEl);
 
-      folderEl.classList.add('folder-drop-target');
-    });
+      if (draggedIdx === -1 || targetIdx === -1 || draggedIdx === targetIdx) return;
+      const rect = folderEl.getBoundingClientRect();
+      const offsetY = e.clientY - rect.top;
+      const thresholdFraction = 0.65;
 
-    folderEl.addEventListener('dragleave', () => {
-      folderEl.classList.remove('folder-drop-target');
+      if (draggedIdx < targetIdx) {
+        if (offsetY < rect.height * thresholdFraction) return;
+      } else {
+        if (offsetY > rect.height * (1 - thresholdFraction)) return;
+      }
+
+      const firstPositions = new Map();
+      items.forEach(item => {
+        firstPositions.set(item, item.getBoundingClientRect().top);
+      });
+
+      if (draggedIdx < targetIdx) {
+        folderEl.after(draggedFolderEl);
+      } else {
+        folderEl.before(draggedFolderEl);
+      }
+
+      const updatedItems = Array.from(container.children);
+      updatedItems.forEach(item => {
+        if (item === draggedFolderEl) return;
+
+        const firstTop = firstPositions.get(item);
+        const lastTop = item.getBoundingClientRect().top;
+        const deltaY = firstTop - lastTop;
+
+        if (deltaY !== 0) {
+          item.style.transition = 'none';
+          item.style.transform = `translateY(${deltaY}px)`;
+          item.offsetHeight;
+          item.style.transition = 'transform 0.25s ease';
+          item.style.transform = '';
+        }
+      });
     });
 
     folderEl.addEventListener('drop', (e) => {
       e.preventDefault();
-      folderEl.classList.remove('folder-drop-target');
-
-      if (draggedItem || !draggedFolderId || draggedFolderId === folder.id) return;
-
-      const sourceIdx = appState.folders.findIndex(f => f.id === draggedFolderId);
-      const targetIdx = appState.folders.findIndex(f => f.id === folder.id);
-
-      if (sourceIdx !== -1 && targetIdx !== -1) {
-        const [movedFolder] = appState.folders.splice(sourceIdx, 1);
-        appState.folders.splice(targetIdx, 0, movedFolder);
-        saveState();
-        render();
-      }
-      draggedFolderId = null;
     });
 
     folderEl.addEventListener('dragend', () => {
-      folderEl.classList.remove('dragging-folder');
+      if (draggedFolderEl) {
+        draggedFolderEl.classList.remove('dragging-folder');
+      }
+      const newFolders = [];
+      Array.from(container.children).forEach(section => {
+        const id = section.dataset.folderId;
+        const folderData = appState.folders.find(f => f.id === id);
+        if (folderData) newFolders.push(folderData);
+      });
+
+      appState.folders = newFolders;
+      saveState();
       draggedFolderId = null;
+      draggedFolderEl = null;
+      Array.from(container.children).forEach(section => {
+        section.style.transition = '';
+        section.style.transform = '';
+      });
     });
 
     container.appendChild(folderEl);
@@ -506,7 +550,7 @@ function createShortcutCard(sc, folderId) {
   card.addEventListener('dragstart', (e) => {
     e.stopPropagation();
     draggedItem = { folderId, shortcutId: sc.id };
-
+    draggedCardEl = card; // Save the DOM element
     setTimeout(() => {
       card.classList.add('dragging-item');
     }, 0);
@@ -514,7 +558,30 @@ function createShortcutCard(sc, folderId) {
 
   card.addEventListener('dragend', () => {
     card.classList.remove('dragging-item');
+    if (draggedCardEl) {
+      appState.folders.forEach(folder => {
+        const grid = document.querySelector(`.shortcuts-grid[data-folder-id="${escapeHtml(folder.id)}"]`);
+        if (!grid) return;
+        const cardEls = Array.from(grid.querySelectorAll('.shortcut-card'));
+        folder.shortcuts = cardEls.map(el => {
+          const scId = el.dataset.shortcutId;
+          let foundSc = null;
+          for (const f of appState.folders) {
+            foundSc = f.shortcuts.find(s => s.id === scId);
+            if (foundSc) break;
+          }
+          return foundSc;
+        }).filter(Boolean);
+      });
+
+      saveState();
+    }
     draggedItem = null;
+    draggedCardEl = null;
+    document.querySelectorAll('.shortcut-card, .add-shortcut-card').forEach(item => {
+      item.style.transition = '';
+      item.style.transform = '';
+    });
   });
 
   return card;
@@ -562,68 +629,79 @@ function getClosestCard(grid, x, y) {
 function setupGridDropZone(grid, folderId) {
   grid.addEventListener('dragover', (e) => {
     e.preventDefault();
-    if (!draggedItem) return;
-
+    e.dataTransfer.dropEffect = 'move';
+    if (!draggedItem || !draggedCardEl || draggedCardEl.contains(e.target)) return;
     const targetCard = getClosestCard(grid, e.clientX, e.clientY);
-    clearDropIndicators();
-
+    if (targetCard === draggedCardEl) return;
+    let insertAction = null;
     if (targetCard) {
+      const items = Array.from(grid.querySelectorAll('.shortcut-card'));
+      const draggedIdx = items.indexOf(draggedCardEl);
+      const targetIdx = items.indexOf(targetCard);
       const rect = targetCard.getBoundingClientRect();
-      const midX = rect.left + rect.width / 2;
-      if (e.clientX < midX) {
-        targetCard.classList.add('drop-indicator-left');
+      const offsetX = e.clientX - rect.left;
+      const offsetY = e.clientY - rect.top;
+      const threshold = 0.60;
+
+      if (draggedIdx !== -1 && targetIdx !== -1) {
+        if (draggedIdx < targetIdx) {
+          if (offsetX < rect.width * threshold && offsetY < rect.height * threshold) return;
+          insertAction = 'after';
+        } else {
+          if (offsetX > rect.width * (1 - threshold) && offsetY > rect.height * (1 - threshold)) return;
+          insertAction = 'before';
+        }
       } else {
-        targetCard.classList.add('drop-indicator-right');
+        const midX = rect.width / 2;
+        if (e.clientX < rect.left + midX) insertAction = 'before';
+        else insertAction = 'after';
       }
     }
+
+    const affectedGrids = new Set([grid]);
+    if (draggedCardEl.parentElement && draggedCardEl.parentElement !== grid) {
+      affectedGrids.add(draggedCardEl.parentElement);
+    }
+
+    const firstPositions = new Map();
+    affectedGrids.forEach(g => {
+      Array.from(g.querySelectorAll('.shortcut-card, .add-shortcut-card')).forEach(item => {
+        firstPositions.set(item, item.getBoundingClientRect());
+      });
+    });
+
+    if (insertAction === 'after') {
+      targetCard.after(draggedCardEl);
+    } else if (insertAction === 'before') {
+      targetCard.before(draggedCardEl);
+    } else if (!targetCard) {
+      const addCard = grid.querySelector('.add-shortcut-card');
+      if (addCard) addCard.before(draggedCardEl);
+    }
+
+    affectedGrids.forEach(g => {
+      Array.from(g.querySelectorAll('.shortcut-card, .add-shortcut-card')).forEach(item => {
+        if (item === draggedCardEl) return;
+
+        const first = firstPositions.get(item);
+        if (!first) return;
+
+        const last = item.getBoundingClientRect();
+        const deltaX = first.left - last.left;
+        const deltaY = first.top - last.top;
+
+        if (deltaX !== 0 || deltaY !== 0) {
+          item.style.transition = 'none';
+          item.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+          item.offsetHeight;
+          item.style.transition = 'transform 0.25s ease';
+          item.style.transform = '';
+        }
+      });
+    });
   });
 
-  grid.addEventListener('dragleave', (e) => {
-    if (!grid.contains(e.relatedTarget)) {
-      clearDropIndicators();
-    }
-  });
-
-  grid.addEventListener('drop', (e) => {
-    e.preventDefault();
-    if (!draggedItem) return;
-
-    const targetCard = getClosestCard(grid, e.clientX, e.clientY);
-    const sourceFolder = appState.folders.find(f => f.id === draggedItem.folderId);
-    const targetFolder = appState.folders.find(f => f.id === folderId);
-
-    if (!sourceFolder || !targetFolder) {
-      clearDropIndicators();
-      return;
-    }
-
-    const shortcutIdx = sourceFolder.shortcuts.findIndex(s => s.id === draggedItem.shortcutId);
-    if (shortcutIdx === -1) {
-      clearDropIndicators();
-      return;
-    }
-
-    const [item] = sourceFolder.shortcuts.splice(shortcutIdx, 1);
-
-    if (targetCard) {
-      const rect = targetCard.getBoundingClientRect();
-      const midX = rect.left + rect.width / 2;
-      const isLeft = e.clientX < midX;
-
-      const targetScId = targetCard.dataset.shortcutId;
-      let targetIdx = targetFolder.shortcuts.findIndex(s => s.id === targetScId);
-
-      if (!isLeft) targetIdx += 1;
-      targetFolder.shortcuts.splice(targetIdx, 0, item);
-    } else {
-      targetFolder.shortcuts.push(item);
-    }
-
-    clearDropIndicators();
-    saveState();
-    render();
-    draggedItem = null;
-  });
+  grid.addEventListener('drop', (e) => e.preventDefault());
 }
 
 function clearDropIndicators() {

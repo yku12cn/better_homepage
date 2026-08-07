@@ -184,37 +184,6 @@ body {
   cursor: grabbing;
 }
 
-@keyframes dropPulse {
-  0% {
-    opacity: 0.5;
-    box-shadow: 0 0 4px var(--primary-color);
-  }
-
-  50% {
-    opacity: 1;
-    box-shadow: 0 0 12px var(--primary-color);
-  }
-
-  100% {
-    opacity: 0.5;
-    box-shadow: 0 0 4px var(--primary-color);
-  }
-}
-
-.folder-drop-target::before {
-  content: '';
-  position: absolute;
-  top: -16px;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background-color: var(--primary-color);
-  border-radius: 2px;
-  animation: dropPulse 1.2s infinite;
-  pointer-events: none;
-  z-index: 10;
-}
-
 .dragging-folder {
   opacity: 0.4;
   transform: scale(0.98);
@@ -325,34 +294,6 @@ body {
 .add-shortcut-card {
   justify-content: center;
   padding-top: 8px;
-}
-
-.shortcut-card.drop-indicator-left::before {
-  content: '';
-  position: absolute;
-  left: -10px;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background-color: var(--primary-color);
-  border-radius: 2px;
-  animation: dropPulse 1.2s infinite;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.shortcut-card.drop-indicator-right::after {
-  content: '';
-  position: absolute;
-  right: -10px;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background-color: var(--primary-color);
-  border-radius: 2px;
-  animation: dropPulse 1.2s infinite;
-  z-index: 10;
-  pointer-events: none;
 }
 
 .folder-title {
