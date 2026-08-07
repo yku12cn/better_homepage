@@ -23,10 +23,10 @@ const DEFAULT_STATE = {
   searchEngineKey: 'google',
   customSearchEngine: { name: '', searchUrl: '' },
   visuals: {
-    blockSize: 90,
-    iconSize: 44,
-    labelSize: 15,
-    folderGap: 40
+    blockSize: 77,
+    iconSize: 37,
+    labelSize: 13,
+    folderGap: 34
   },
   folders: [
     {
@@ -500,7 +500,7 @@ function createShortcutCard(sc, folderId) {
 
   card.addEventListener('contextmenu', (e) => {
     e.preventDefault();
-    openContextMenu(e.clientX, e.clientY, folderId, sc.id);
+    openContextMenu(e.pageX, e.pageY, folderId, sc.id);
   });
 
   card.addEventListener('dragstart', (e) => {

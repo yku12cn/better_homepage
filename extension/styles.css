@@ -1,6 +1,7 @@
 :root {
   --bg-color: #121212;
   --surface-color: #1e1e1e;
+  --surface-hover: #2c2c2c;
   --text-color: #e3e3e3;
   --secondary-text: #9aa0a6;
   --border-color: #333333;
@@ -8,16 +9,12 @@
   --shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.7);
   --radius: 12px;
-
-  --block-size: 90px;
-  --icon-size: 44px;
-  --label-size: 15px;
-  --folder-gap: 40px;
 }
 
 [data-theme="light"] {
   --bg-color: #f8f9fa;
   --surface-color: #ffffff;
+  --surface-hover: #f1f3f4;
   --text-color: #1f1f1f;
   --secondary-text: #5f6368;
   --border-color: #e0e0e0;
@@ -43,7 +40,7 @@ body {
 }
 
 .app-container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -246,9 +243,12 @@ body {
   text-decoration: none;
   color: var(--text-color);
   cursor: pointer;
-  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, opacity 0.25s ease;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.25s ease,
+    opacity 0.25s ease,
+    background-color 0.25s ease;
   user-select: none;
-  border: 1px solid var(--border-color);
+  border: none;
   box-shadow: var(--shadow);
   position: relative;
   flex: 1 1 calc(10% - 16px);
@@ -259,6 +259,7 @@ body {
 .shortcut-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-hover);
+  background-color: var(--surface-hover);
 }
 
 .dragging-item {
@@ -287,11 +288,14 @@ body {
 .shortcut-label {
   font-size: var(--label-size);
   font-weight: 500;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: break-word;
   transition: font-size 0.2s;
 }
 
@@ -311,6 +315,16 @@ body {
   color: var(--primary-color);
   box-shadow: var(--shadow-hover);
   transform: translateY(-2px);
+}
+
+.shortcut-card {
+  justify-content: flex-start;
+  padding-top: 14px;
+}
+
+.add-shortcut-card {
+  justify-content: center;
+  padding-top: 8px;
 }
 
 .shortcut-card.drop-indicator-left::before {
