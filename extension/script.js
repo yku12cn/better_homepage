@@ -1,14 +1,14 @@
+// Pre-generated emoji arrays to eliminate heavy regex looping on startup
 const EMOJI_CATEGORIES = [
-  { id: 'smileys', icon: '😀', label: 'Smileys & Emotion', ranges: [[0x1F600, 0x1F64F]] },
-  { id: 'people', icon: '👋', label: 'People & Body', ranges: [[0x1F440, 0x1F49F], [0x1F90C, 0x1F93E]] },
-  { id: 'animals', icon: '🐶', label: 'Animals & Nature', ranges: [[0x1F400, 0x1F43E], [0x1F330, 0x1F353], [0x1F980, 0x1F9AE]] },
-  { id: 'food', icon: '🍕', label: 'Food & Drink', ranges: [[0x1F32D, 0x1F37F], [0x1F9C0, 0x1F9CB]] },
-  { id: 'travel', icon: '🚀', label: 'Travel & Places', ranges: [[0x1F680, 0x1F6FF], [0x1F300, 0x1F320]] },
-  { id: 'objects', icon: '💻', label: 'Objects & Tech', ranges: [[0x1F4A0, 0x1F5FF], [0x1FA70, 0x1FA9F]] },
-  { id: 'symbols', icon: '🔣', label: 'Symbols & Shapes', ranges: [[0x2600, 0x26FF], [0x2700, 0x27BF], [0x1F9E0, 0x1F9FF]] }
+  { id: 'smileys', icon: '😀', label: 'Smileys & Emotion', emojis: '😀 😃 😄 😁 😆 😅 😂 🤣 🥲 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🥸 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾'.split(' ') },
+  { id: 'people', icon: '👋', label: 'People & Body', emojis: '👋 🤚 🖐 ✋ 🖖 👌 🤌 🤏 ✌️ 🤞 🤟 🤘 🤙 👈 👉 👆 🖕 👇 ☝️ 👍 👎 ✊ 👊 🤛 🤜 👏 🙌 👐 🤲 🤝 🙏 ✍️ 💅 🤳 💪 🦾 🦿 🦵 🦶 👂 🦻 👃 🧠 🫀 🫁 🦷 🦴 👀 👁 👅 👄 💋 🩸'.split(' ') },
+  { id: 'animals', icon: '🐶', label: 'Animals & Nature', emojis: '🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐻‍❄️ 🐨 🐯 🦁 🐮 🐷 🐽 🐸 🐵 🙈 🙉 🙊 🐒 🐔 🐧 🐦 🐤 🐣 🐥 🦆 🦅 🦉 🦇 🐺 🐗 🐴 🦄 🐝 🪱 🐛 🦋 🐌 🐞 🐜 🪰 🪲 🪳 🦟 🦗 🕷 🕸 🦂 🐢 🐍 🦎 🦖 🦕 🐙 🦑 🦐 🦞 🦀 🐡 🐠 🐟 🐬 🐳 🐋 🦈 🦭 🐊 🐅 🐆 🦓 🦍 🦧 🦣 🐘 🦛 🦏 🐪 🐫 🦒 🦘 🦬 🐃 🐂 🐄 🐎 🐖 🐏 🐑 🦙 🐐 🦌 🐕 🐩 🦮 🐕‍🦺 🐈 🐈‍⬛ 🪶 🐓 🦃 🦤 🦚 🦜 🦢 🦩 🕊 🐇 🦝 🦨 🦡 🦫 🦦 🦥 🐁 🐀 🐿 🦔 🐾 🐉 🐲 🌵 🎄 🌲 🌳 🌴 🌱 🌿 ☘️ 🍀 🎍 🪴 🎋 🍃 🍂 🍁 🍄 🐚 🪨 🌾 💐 🌷 🌹 🥀 🌺 🌸 🌼 🌻 🌞 🌝 🌛 🌜 🌚 🌕 🌖 🌗 🌘 🌑 🌒 🌓 🌔 🌙 🌎 🌍 🌏 🪐 💫 ⭐️ 🌟 ✨ ⚡️ ☄️ 💥 🔥 🌪 🌈 ☀️ 🌤 ⛅️ 🌥 ☁️ 🌦 🌧 ⛈ 🌩 🌨 ❄️ ☃️ ⛄️ 🌬 💨 💧 💦 ☔️ ☂️ 🌊 🌫'.split(' ') },
+  { id: 'food', icon: '🍕', label: 'Food & Drink', emojis: '🍏 🍎 🍐 🍊 🍋 🍌 🍉 🍇 🍓 🫐 🍈 🍒 🍑 🥭 🍍 🥥 🥝 🍅 🍆 🥑 🥦 🥬 🥒 🌶 🫑 🌽 🥕 🫒 蒜 🧅 🥔 🍠 🥐 🥯 🍞 🥖 🥨 🧀 🥚 🍳 🧈 🥞 🧇 🥓 🥩 🍗 🍖 🌭 🍔 🍟 🍕 🫓 🥪 🥙 🧆 🌮 🌯 🫔 🥗 🥘 🫕 🥫 🍝 🍜 🍲 🍛 🍣 🍱 🥟 🦪 🍤 🍙 🍚 🍘 🍥 🥠 🥮 🍢 🍡 🍧 🍨 🍦 🥧 🧁 🍰 🎂 🍮 🍭 🍬 🍫 🍿 🍩 🍪 🌰 🥜 🍯 🥛 🍼 🫖 ☕️ 🍵 🧃 🥤 🧋 🍶 🍺 🍻 🥂 🍷 🥃 🍸 🍹 🧉 🍾 🧊 🥄 🍴 🍽 🥣 🥡 🥢 🧂'.split(' ') },
+  { id: 'travel', icon: '🚀', label: 'Travel & Places', emojis: '🚗 🚕 🚙 🚌 🚎 🏎 🚓 🚑 🚒 🚐 🛻 🚚 🚛 🚜 🦯 🦽 🦼 🛴 🚲 🛵 🏍 🛺 🚨 🚔 🚍 🚘 🚖 🚡 🚠 🚟 🚃 🚋 🚞 🚝 🚄 🚅 🚈 🚂 🚆 🚇 🚊 🚉 ✈️ 🛫 🛬 🛩 💺 🛰 🚀 🛸 🚁 🛶 ⛵️ 🚤 🛥 🛳 ⛴ 🚢 ⚓️ 🪝 ⛽️ 🚧 🚦 🚥 🚏 🗺 🗿 🗽 🗼 🏰 🏯 🏟 🎡 🎢 🎠 ⛲️ ⛱ 🏖 🏝 🏜 🌋 ⛰ 🏔 🗻 🏕 ⛺️ 🛖 🏠 🏡 🏘 🏚 🏗 🏭 🏢 🏬 🏣 🏤 🏥 🏦 🏨 🏪 🏫 🏩 💒 🏛 ⛪️ 🕌 🕍 🛕 🕋 ⛩ 🛤 🛣 🗾 🎑 🏞 🌅 🌄 🌠 🎇 🎆 🌇 🌆 🏙 🌃 🌌 🌉 🌁'.split(' ') },
+  { id: 'objects', icon: '💻', label: 'Objects & Tech', emojis: '⌚️ 📱 📲 💻 ⌨️ 🖥 🖨 🖱 🖲 🕹 🗜 💽 💾 💿 📀 📼 📷 📸 📹 🎥 📽 🎞 📞 ☎️ 📟 📠 📺 📻 🎙 🎚 🎛 🧭 ⏱ ⏲ ⏰ 🕰 ⌛️ ⏳ 📡 🔋 🔌 💡 🔦 🕯 🪔 🧯 🛢 💸 💵 💴 💶 💷 🪙 💰 💳 💎 ⚖️ 🪜 🧰 🪛 🔧 🔨 ⚒ 🛠 ⛏ 🪚 🔩 ⚙️ 🪤 🧱 ⛓ 🧲 🔫 💣 🧨 🪓 🔪 🗡 ⚔️ 🛡 🚬 ⚰️ 🪦 ⚱️ 🏺 🔮 📿 🧿 💈 ⚗️ 🔭 🔬 🕳 🩹 🩺 💊 💉 🩸 🧬 🦠 🧫 🧪 🌡 🧹 🪠 🧺 🧻 🚽 🚰 🚿 🛁 🛀 🧼 🪥 🪒 🧽 🪣 🧴 🛎 🔑 🗝 🚪 🪑 🛋 🛏 🛌 🧸 🪆 🖼 🪞 🪟 🛍 🛒 🎁 🎈 🎏 🎀 🪄 🪅 🎊 🎉 🎎 🏮 🎐 🧧 ✉️ 📩 📨 📧 💌 📥 📤 📦 🏷 🪧 📪 📫 📬 📭 📮 📯 📜 📃 📄 📑 🧾 📊 📈 📉 🗒 🗓 📆 📅 🗑 📇 🗃 🗳 🗄 📋 📁 📂 🗂 🗞 📰 📓 📔 📒 📕 📗 📘 📙 📚 📖 🔖 🧷 🔗 📎 🖇 📐 📏 🧮 📌 📍 ✂️ 🖊 🖋 ✒️ 🖌 🖍 📝 ✏️ 🔍 🔎 🔏 🔐 🔒 🔓'.split(' ') },
+  { id: 'symbols', icon: '🔣', label: 'Symbols & Shapes', emojis: '❤️ 🧡 💛 💚 💙 💜 🖤 🤍 🤎 💔 ❣️ 💕 💞 💓 💗 💖 💘 💝 💟 ☮️ ✝️ ☪️ 🕉 ☸️ ✡️ 🔯 🕎 ☯️ ☦️ 🛐 ⛎ ♈️ ♉️ ♊️ ♋️ ♌️ ♍️ ♎️ ♏️ ♐️ ♑️ ♒️ ♓️ 🆔 ⚛️ 🉑 ☢️ ☣️ 📴 📳 🈶 🈚️ 🈸 🈺 🈷️ ✴️ 🆚 💮 🉐 ㊙️ ㊗️ 🈴 🈵 🈹 🈲 🅰️ 🅱️ 🆎 🆑 🅾️ 🆘 ❌ ⭕️ 🛑 ⛔️ 📛 🚫 💯 💢 ♨️ 🚷 🚯 🚳 🚱 🔞 📵 🚭 ❗️ ❕ ❓ ❔ ‼️ ⁉️ 🔅 🔆 〽️ ⚠️ 🚸 🔱 ⚜️ 🔰 ♻️ ✅ 🈯️ 💹 ❇️ ✳️ ❎ 🌐 💠 Ⓜ️ 🌀 💤 🏧 🚾 ♿️ 🅿️ 🛗 🈳 🈂️ 🛂 🛃 🛄 🛅 🚹 🚺 🚼 ⚧ 🚻 🚮 🎦 📶 🈁 🔣 ℹ️ 🔤 🔡 🔠 🆖 🆗 🆙 🆒 🆕 🆓 0️⃣ 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ 7️⃣ 8️⃣ 9️⃣ 🔟 🔢 #️⃣ *️⃣ ⏏️ ▶️ ⏸ ⏯ ⏹ ⏺ ⏭ ⏮ ⏩ ⏪ ⏫ ⏬ ◀️ 🔼 🔽 ➡️ ⬅️ ⬆️ ⬇️ ↗️ ↘️ ↙️ ↖️ ↕️ ↔️ ↪️ ↩️ ⤴️ ⤵️ 🔀 🔁 🔂 🔄 🔃 🎵 🎶 ➕ ➖ ➗ ✖️ ♾ 💲 💱 ™️ ©️ ®️ 〰️ ➰ ➿ 🔚 🔙 🔛 🔝 🔜 ✔️ ☑️ 🔘 🔴 🟠 🟡 🟢 🔵 🟣 ⚫️ ⚪️ 🟤 🔺 🔻 🔸 🔹 🔶 🔷 🔳 🔲 ▪️ ▫️ ◾️ ◽️ ◼️ ◻️ 🟥 🟧 🟨 🟩 🟦 🟪 ⬛️ ⬜️ 🟫 🔈 🔇 🔉 🔊 🔔 🔕 📣 📢 👁‍🗨 💬 💭 🗯 ♠️ ♣️ ♥️ ♦️ 🃏 🎴 🀄️ 🕐 🕑 🕒 🕓 🕔 🕕 🕖 🕗 🕘 🕙 🕚 🕛 🕜 🕝 🕞 🕟 🕠 🕡 🕢 🕣 🕤 🕥 🕦 🕧'.split(' ') }
 ];
 
-const categoryEmojiCache = {};
 let activeCategoryId = 'smileys';
 let selectedEmojiValue = '⚡';
 
@@ -103,7 +103,12 @@ function getActiveEngine() {
 function updateSearchEngineFavicon() {
   const engine = getActiveEngine();
   const iconEl = document.getElementById('searchEngineIcon');
-  iconEl.src = getBrowserCachedFavicon(engine.searchUrl);
+  try {
+    const engineUrl = new URL(engine.searchUrl.replace(/%s/g, ''));
+    iconEl.src = getBrowserCachedFavicon(engineUrl.origin);
+  } catch (e) {
+    iconEl.src = getBrowserCachedFavicon('https://google.com'); // Fallback icon
+  }
 }
 
 function setupSearchForm() {
@@ -208,7 +213,7 @@ function setupMenuAndModals() {
         const importedData = JSON.parse(event.target.result);
         if (importedData && Array.isArray(importedData.folders)) {
           appState = importedData;
-          applyTheme(appState.theme || 'dark');
+          applyTheme(appState.theme || DEFAULT_STATE.theme);
           applyVisuals(appState.visuals || DEFAULT_STATE.visuals);
           saveState();
           updateSearchEngineFavicon();
@@ -238,28 +243,6 @@ function setupMenuAndModals() {
     saveState();
     render();
   });
-}
-
-function getCategoryEmojis(catId) {
-  if (categoryEmojiCache[catId]) return categoryEmojiCache[catId];
-
-  const category = EMOJI_CATEGORIES.find(c => c.id === catId);
-  if (!category) return [];
-
-  const emojis = [];
-  const emojiRegex = /\p{Extended_Pictographic}/u;
-
-  category.ranges.forEach(([start, end]) => {
-    for (let cp = start; cp <= end; cp++) {
-      const char = String.fromCodePoint(cp);
-      if (emojiRegex.test(char)) {
-        emojis.push(char);
-      }
-    }
-  });
-
-  categoryEmojiCache[catId] = emojis;
-  return emojis;
 }
 
 function setupEmojiPicker() {
@@ -294,10 +277,12 @@ function renderEmojiGrid(catId) {
   const grid = document.getElementById('emojiGrid');
   grid.innerHTML = '';
 
-  const emojis = getCategoryEmojis(catId);
+  const category = EMOJI_CATEGORIES.find(c => c.id === catId);
+  if (!category) return;
+
   const fragment = document.createDocumentFragment();
 
-  emojis.forEach(char => {
+  category.emojis.forEach(char => {
     const el = document.createElement('div');
     el.className = 'emoji-item';
     if (char === selectedEmojiValue) {
@@ -391,7 +376,6 @@ function render() {
 
     folderEl.innerHTML = `
       <div class="folder-header">
-        <span class="folder-drag-handle" title="Drag to reorder sections">⠿</span>
         <input class="folder-title" value="${safeFolderTitle}" data-folder-id="${safeFolderId}">
         <button class="delete-folder-btn" data-folder-id="${safeFolderId}" title="Delete Folder">✕</button>
       </div>
@@ -424,62 +408,65 @@ function render() {
       }, 0);
     });
 
+    let folderDragTicking = false;
     folderEl.addEventListener('dragover', (e) => {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'move';
       if (draggedItem || !draggedFolderEl || draggedFolderEl === folderEl) return;
-      const items = Array.from(container.children);
-      const draggedIdx = items.indexOf(draggedFolderEl);
-      const targetIdx = items.indexOf(folderEl);
 
-      if (draggedIdx === -1 || targetIdx === -1 || draggedIdx === targetIdx) return;
-      const rect = folderEl.getBoundingClientRect();
-      const offsetY = e.clientY - rect.top;
-      const thresholdFraction = 0.65;
+      const clientY = e.clientY;
+      if (!folderDragTicking) {
+        window.requestAnimationFrame(() => {
+          const items = Array.from(container.children);
+          const draggedIdx = items.indexOf(draggedFolderEl);
+          const targetIdx = items.indexOf(folderEl);
 
-      if (draggedIdx < targetIdx) {
-        if (offsetY < rect.height * thresholdFraction) return;
-      } else {
-        if (offsetY > rect.height * (1 - thresholdFraction)) return;
+          if (draggedIdx !== -1 && targetIdx !== -1 && draggedIdx !== targetIdx) {
+            const rect = folderEl.getBoundingClientRect();
+            const offsetY = clientY - rect.top;
+            const thresholdFraction = 0.65;
+
+            let shouldMove = false;
+            if (draggedIdx < targetIdx && offsetY >= rect.height * thresholdFraction) {
+              shouldMove = true;
+            } else if (draggedIdx > targetIdx && offsetY <= rect.height * (1 - thresholdFraction)) {
+              shouldMove = true;
+            }
+
+            if (shouldMove) {
+              const firstPositions = new Map();
+              items.forEach(item => firstPositions.set(item, item.getBoundingClientRect().top));
+
+              if (draggedIdx < targetIdx) folderEl.after(draggedFolderEl);
+              else folderEl.before(draggedFolderEl);
+
+              Array.from(container.children).forEach(item => {
+                if (item === draggedFolderEl) return;
+                const firstTop = firstPositions.get(item);
+                const lastTop = item.getBoundingClientRect().top;
+                const deltaY = firstTop - lastTop;
+
+                if (deltaY !== 0) {
+                  item.style.transition = 'none';
+                  item.style.transform = `translateY(${deltaY}px)`;
+                  item.offsetHeight;
+                  item.style.transition = 'transform 0.25s ease';
+                  item.style.transform = '';
+                }
+              });
+            }
+          }
+          folderDragTicking = false;
+        });
+        folderDragTicking = true;
       }
-
-      const firstPositions = new Map();
-      items.forEach(item => {
-        firstPositions.set(item, item.getBoundingClientRect().top);
-      });
-
-      if (draggedIdx < targetIdx) {
-        folderEl.after(draggedFolderEl);
-      } else {
-        folderEl.before(draggedFolderEl);
-      }
-
-      const updatedItems = Array.from(container.children);
-      updatedItems.forEach(item => {
-        if (item === draggedFolderEl) return;
-
-        const firstTop = firstPositions.get(item);
-        const lastTop = item.getBoundingClientRect().top;
-        const deltaY = firstTop - lastTop;
-
-        if (deltaY !== 0) {
-          item.style.transition = 'none';
-          item.style.transform = `translateY(${deltaY}px)`;
-          item.offsetHeight;
-          item.style.transition = 'transform 0.25s ease';
-          item.style.transform = '';
-        }
-      });
     });
 
-    folderEl.addEventListener('drop', (e) => {
-      e.preventDefault();
-    });
+    folderEl.addEventListener('drop', (e) => e.preventDefault());
 
     folderEl.addEventListener('dragend', () => {
-      if (draggedFolderEl) {
-        draggedFolderEl.classList.remove('dragging-folder');
-      }
+      if (draggedFolderEl) draggedFolderEl.classList.remove('dragging-folder');
+
       const newFolders = [];
       Array.from(container.children).forEach(section => {
         const id = section.dataset.folderId;
@@ -491,6 +478,7 @@ function render() {
       saveState();
       draggedFolderId = null;
       draggedFolderEl = null;
+
       Array.from(container.children).forEach(section => {
         section.style.transition = '';
         section.style.transform = '';
@@ -498,27 +486,6 @@ function render() {
     });
 
     container.appendChild(folderEl);
-  });
-
-  document.querySelectorAll('.folder-title').forEach(input => {
-    input.addEventListener('change', (e) => {
-      const folder = appState.folders.find(f => f.id === e.target.dataset.folderId);
-      if (folder) {
-        folder.title = e.target.value;
-        saveState();
-      }
-    });
-  });
-
-  document.querySelectorAll('.delete-folder-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const folderId = e.target.dataset.folderId;
-      if (confirm('Delete this section?')) {
-        appState.folders = appState.folders.filter(f => f.id !== folderId);
-        saveState();
-        render();
-      }
-    });
   });
 }
 
@@ -550,7 +517,7 @@ function createShortcutCard(sc, folderId) {
   card.addEventListener('dragstart', (e) => {
     e.stopPropagation();
     draggedItem = { folderId, shortcutId: sc.id };
-    draggedCardEl = card; // Save the DOM element
+    draggedCardEl = card;
     setTimeout(() => {
       card.classList.add('dragging-item');
     }, 0);
@@ -627,87 +594,88 @@ function getClosestCard(grid, x, y) {
 }
 
 function setupGridDropZone(grid, folderId) {
+  let gridDragTicking = false;
+
   grid.addEventListener('dragover', (e) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
     if (!draggedItem || !draggedCardEl || draggedCardEl.contains(e.target)) return;
-    const targetCard = getClosestCard(grid, e.clientX, e.clientY);
-    if (targetCard === draggedCardEl) return;
-    let insertAction = null;
-    if (targetCard) {
-      const items = Array.from(grid.querySelectorAll('.shortcut-card'));
-      const draggedIdx = items.indexOf(draggedCardEl);
-      const targetIdx = items.indexOf(targetCard);
-      const rect = targetCard.getBoundingClientRect();
-      const offsetX = e.clientX - rect.left;
-      const offsetY = e.clientY - rect.top;
-      const threshold = 0.60;
 
-      if (draggedIdx !== -1 && targetIdx !== -1) {
-        if (draggedIdx < targetIdx) {
-          if (offsetX < rect.width * threshold && offsetY < rect.height * threshold) return;
-          insertAction = 'after';
-        } else {
-          if (offsetX > rect.width * (1 - threshold) && offsetY > rect.height * (1 - threshold)) return;
-          insertAction = 'before';
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+
+    if (!gridDragTicking) {
+      window.requestAnimationFrame(() => {
+        const targetCard = getClosestCard(grid, clientX, clientY);
+        if (targetCard && targetCard !== draggedCardEl) {
+          let insertAction = null;
+          const items = Array.from(grid.querySelectorAll('.shortcut-card'));
+          const draggedIdx = items.indexOf(draggedCardEl);
+          const targetIdx = items.indexOf(targetCard);
+          const rect = targetCard.getBoundingClientRect();
+          const offsetX = clientX - rect.left;
+          const offsetY = clientY - rect.top;
+          const threshold = 0.60;
+
+          if (draggedIdx !== -1 && targetIdx !== -1) {
+            if (draggedIdx < targetIdx) {
+              if (offsetX >= rect.width * threshold || offsetY >= rect.height * threshold) insertAction = 'after';
+            } else {
+              if (offsetX <= rect.width * (1 - threshold) || offsetY <= rect.height * (1 - threshold)) insertAction = 'before';
+            }
+          } else {
+            const midX = rect.width / 2;
+            if (clientX < rect.left + midX) insertAction = 'before';
+            else insertAction = 'after';
+          }
+
+          if (insertAction) {
+            const affectedGrids = new Set([grid]);
+            if (draggedCardEl.parentElement && draggedCardEl.parentElement !== grid) {
+              affectedGrids.add(draggedCardEl.parentElement);
+            }
+
+            const firstPositions = new Map();
+            affectedGrids.forEach(g => {
+              Array.from(g.querySelectorAll('.shortcut-card, .add-shortcut-card')).forEach(item => {
+                firstPositions.set(item, item.getBoundingClientRect());
+              });
+            });
+
+            if (insertAction === 'after') targetCard.after(draggedCardEl);
+            else if (insertAction === 'before') targetCard.before(draggedCardEl);
+            else if (!targetCard) {
+              const addCard = grid.querySelector('.add-shortcut-card');
+              if (addCard) addCard.before(draggedCardEl);
+            }
+
+            affectedGrids.forEach(g => {
+              Array.from(g.querySelectorAll('.shortcut-card, .add-shortcut-card')).forEach(item => {
+                if (item === draggedCardEl) return;
+                const first = firstPositions.get(item);
+                if (!first) return;
+                const last = item.getBoundingClientRect();
+                const deltaX = first.left - last.left;
+                const deltaY = first.top - last.top;
+
+                if (deltaX !== 0 || deltaY !== 0) {
+                  item.style.transition = 'none';
+                  item.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+                  item.offsetHeight;
+                  item.style.transition = 'transform 0.25s ease';
+                  item.style.transform = '';
+                }
+              });
+            });
+          }
         }
-      } else {
-        const midX = rect.width / 2;
-        if (e.clientX < rect.left + midX) insertAction = 'before';
-        else insertAction = 'after';
-      }
-    }
-
-    const affectedGrids = new Set([grid]);
-    if (draggedCardEl.parentElement && draggedCardEl.parentElement !== grid) {
-      affectedGrids.add(draggedCardEl.parentElement);
-    }
-
-    const firstPositions = new Map();
-    affectedGrids.forEach(g => {
-      Array.from(g.querySelectorAll('.shortcut-card, .add-shortcut-card')).forEach(item => {
-        firstPositions.set(item, item.getBoundingClientRect());
+        gridDragTicking = false;
       });
-    });
-
-    if (insertAction === 'after') {
-      targetCard.after(draggedCardEl);
-    } else if (insertAction === 'before') {
-      targetCard.before(draggedCardEl);
-    } else if (!targetCard) {
-      const addCard = grid.querySelector('.add-shortcut-card');
-      if (addCard) addCard.before(draggedCardEl);
+      gridDragTicking = true;
     }
-
-    affectedGrids.forEach(g => {
-      Array.from(g.querySelectorAll('.shortcut-card, .add-shortcut-card')).forEach(item => {
-        if (item === draggedCardEl) return;
-
-        const first = firstPositions.get(item);
-        if (!first) return;
-
-        const last = item.getBoundingClientRect();
-        const deltaX = first.left - last.left;
-        const deltaY = first.top - last.top;
-
-        if (deltaX !== 0 || deltaY !== 0) {
-          item.style.transition = 'none';
-          item.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-          item.offsetHeight;
-          item.style.transition = 'transform 0.25s ease';
-          item.style.transform = '';
-        }
-      });
-    });
   });
 
   grid.addEventListener('drop', (e) => e.preventDefault());
-}
-
-function clearDropIndicators() {
-  document.querySelectorAll('.shortcut-card').forEach(card => {
-    card.classList.remove('drop-indicator-left', 'drop-indicator-right');
-  });
 }
 
 const contextMenu = document.getElementById('contextMenu');
@@ -739,6 +707,29 @@ function setupGlobalEvents() {
       folder.shortcuts = folder.shortcuts.filter(s => s.id !== shortcutId);
       saveState();
       render();
+    }
+  });
+
+  const container = document.getElementById('foldersContainer');
+
+  container.addEventListener('click', (e) => {
+    if (e.target.classList.contains('delete-folder-btn')) {
+      const folderId = e.target.dataset.folderId;
+      if (confirm('Delete this section?')) {
+        appState.folders = appState.folders.filter(f => f.id !== folderId);
+        saveState();
+        render();
+      }
+    }
+  });
+
+  container.addEventListener('change', (e) => {
+    if (e.target.classList.contains('folder-title')) {
+      const folder = appState.folders.find(f => f.id === e.target.dataset.folderId);
+      if (folder) {
+        folder.title = e.target.value;
+        saveState();
+      }
     }
   });
 }
