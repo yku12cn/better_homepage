@@ -23,6 +23,8 @@
 ## Get It From Chrome Store
 [**Better Homepage**](https://chromewebstore.google.com/detail/hfigffcbjhiibelilniondghmoaafcip)
 
+**Note: In the chrome extension settings, you may also want to enable `Alow access to file URLs` so you can add shortcuts to your local files.**
+
 ## Installation (Developer / Unpacked Mode)
 
 1. **Clone or Download** this repository

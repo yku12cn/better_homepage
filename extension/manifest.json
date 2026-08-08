@@ -12,6 +12,10 @@
     "storage",
     "favicon"
   ],
+  "optional_host_permissions": [
+    "file:///*",
+    "http://localhost/*"
+  ],
   "chrome_url_overrides": {
     "newtab": "newtab.html"
   },
