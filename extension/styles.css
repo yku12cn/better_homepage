@@ -311,9 +311,9 @@ select,
 
 .add-shortcut-card {
   background: transparent;
-  border: 2px dashed var(--border-color);
+  border: none;
   font-size: 2rem;
-  color: var(--secondary-text);
+  color: var(--border-color);
   box-shadow: none;
 }
 
