@@ -23,10 +23,10 @@ const DEFAULT_STATE = {
   searchEngineKey: 'google',
   customSearchEngine: { name: '', searchUrl: '' },
   visuals: {
-    blockSize: 77,
-    iconSize: 37,
-    labelSize: 13,
-    folderGap: 34
+    blockSize: 80,
+    iconSize: 32,
+    labelSize: 14,
+    folderGap: 20
   },
   folders: [
     {
