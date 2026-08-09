@@ -52,6 +52,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadState();
   applyVisuals(appState.visuals || DEFAULT_STATE.visuals);
   applyTheme(appState.theme);
+  document.body.offsetHeight;
+  document.body.classList.remove('preload');
   setupMenuAndModals();
   setupSearchForm();
   updateSearchEngineFavicon();
@@ -546,18 +548,17 @@ function createShortcutCard(sc, folderId) {
   card.addEventListener('dragend', () => {
     card.classList.remove('dragging-item');
     if (draggedCardEl) {
+      const allShortcuts = new Map();
+      appState.folders.forEach(f => {
+        f.shortcuts.forEach(sc => allShortcuts.set(sc.id, sc));
+      });
       appState.folders.forEach(folder => {
         const grid = document.querySelector(`.shortcuts-grid[data-folder-id="${escapeHtml(folder.id)}"]`);
         if (!grid) return;
         const cardEls = Array.from(grid.querySelectorAll('.shortcut-card'));
         folder.shortcuts = cardEls.map(el => {
           const scId = el.dataset.shortcutId;
-          let foundSc = null;
-          for (const f of appState.folders) {
-            foundSc = f.shortcuts.find(s => s.id === scId);
-            if (foundSc) break;
-          }
-          return foundSc;
+          return allShortcuts.get(scId);
         }).filter(Boolean);
       });
 
@@ -627,9 +628,13 @@ function setupGridDropZone(grid, folderId) {
     if (!gridDragTicking) {
       window.requestAnimationFrame(() => {
         const targetCard = getClosestCard(grid, clientX, clientY);
+        let insertAction = null;
+
+        const cards = Array.from(grid.querySelectorAll('.shortcut-card'));
+        const isOnlyCardInSource = (cards.length === 1 && cards[0] === draggedCardEl);
+
         if (targetCard && targetCard !== draggedCardEl) {
-          let insertAction = null;
-          const items = Array.from(grid.querySelectorAll('.shortcut-card'));
+          const items = cards;
           const draggedIdx = items.indexOf(draggedCardEl);
           const targetIdx = items.indexOf(targetCard);
           const rect = targetCard.getBoundingClientRect();
@@ -648,46 +653,50 @@ function setupGridDropZone(grid, folderId) {
             if (clientX < rect.left + midX) insertAction = 'before';
             else insertAction = 'after';
           }
+        } else if (!targetCard && !isOnlyCardInSource) {
+          insertAction = 'empty';
+        }
 
-          if (insertAction) {
-            const affectedGrids = new Set([grid]);
-            if (draggedCardEl.parentElement && draggedCardEl.parentElement !== grid) {
-              affectedGrids.add(draggedCardEl.parentElement);
-            }
-
-            const firstPositions = new Map();
-            affectedGrids.forEach(g => {
-              Array.from(g.querySelectorAll('.shortcut-card, .add-shortcut-card')).forEach(item => {
-                firstPositions.set(item, item.getBoundingClientRect());
-              });
-            });
-
-            if (insertAction === 'after') targetCard.after(draggedCardEl);
-            else if (insertAction === 'before') targetCard.before(draggedCardEl);
-            else if (!targetCard) {
-              const addCard = grid.querySelector('.add-shortcut-card');
-              if (addCard) addCard.before(draggedCardEl);
-            }
-
-            affectedGrids.forEach(g => {
-              Array.from(g.querySelectorAll('.shortcut-card, .add-shortcut-card')).forEach(item => {
-                if (item === draggedCardEl) return;
-                const first = firstPositions.get(item);
-                if (!first) return;
-                const last = item.getBoundingClientRect();
-                const deltaX = first.left - last.left;
-                const deltaY = first.top - last.top;
-
-                if (deltaX !== 0 || deltaY !== 0) {
-                  item.style.transition = 'none';
-                  item.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-                  item.offsetHeight;
-                  item.style.transition = 'transform 0.25s ease';
-                  item.style.transform = '';
-                }
-              });
-            });
+        if (insertAction) {
+          const affectedGrids = new Set([grid]);
+          if (draggedCardEl.parentElement && draggedCardEl.parentElement !== grid) {
+            affectedGrids.add(draggedCardEl.parentElement);
           }
+
+          const firstPositions = new Map();
+          affectedGrids.forEach(g => {
+            Array.from(g.querySelectorAll('.shortcut-card, .add-shortcut-card')).forEach(item => {
+              firstPositions.set(item, item.getBoundingClientRect());
+            });
+          });
+
+          if (insertAction === 'after') {
+            targetCard.after(draggedCardEl);
+          } else if (insertAction === 'before') {
+            targetCard.before(draggedCardEl);
+          } else if (insertAction === 'empty') {
+            const addCard = grid.querySelector('.add-shortcut-card');
+            if (addCard) addCard.before(draggedCardEl);
+          }
+
+          affectedGrids.forEach(g => {
+            Array.from(g.querySelectorAll('.shortcut-card, .add-shortcut-card')).forEach(item => {
+              if (item === draggedCardEl) return;
+              const first = firstPositions.get(item);
+              if (!first) return;
+              const last = item.getBoundingClientRect();
+              const deltaX = first.left - last.left;
+              const deltaY = first.top - last.top;
+
+              if (deltaX !== 0 || deltaY !== 0) {
+                item.style.transition = 'none';
+                item.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+                item.offsetHeight;
+                item.style.transition = 'transform 0.25s ease';
+                item.style.transform = '';
+              }
+            });
+          });
         }
         gridDragTicking = false;
       });
