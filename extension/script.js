@@ -57,11 +57,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupMenuAndModals();
   setupSearchForm();
   updateSearchEngineFavicon();
-  setupEmojiPicker();
   render();
   setupGlobalEvents();
   setupAddFolderCursorDetection();
+  setupStorageSync();
 });
+
+function setupStorageSync() {
+  chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName === 'local' && changes.better_homepage_data) {
+      const newData = changes.better_homepage_data.newValue;
+      if (!newData) return;
+
+      appState = { ...DEFAULT_STATE, ...newData };
+      applyVisuals(appState.visuals || DEFAULT_STATE.visuals);
+      applyTheme(appState.theme);
+      updateSearchEngineFavicon();
+      render();
+    }
+  });
+}
 
 function applyVisuals(visuals) {
   const root = document.documentElement;
@@ -109,7 +124,7 @@ function updateSearchEngineFavicon() {
     const engineUrl = new URL(engine.searchUrl.replace(/%s/g, ''));
     iconEl.src = getBrowserCachedFavicon(engineUrl.origin);
   } catch (e) {
-    iconEl.src = getBrowserCachedFavicon('https://google.com'); // Fallback icon
+    iconEl.src = getBrowserCachedFavicon('https://google.com');
   }
 }
 
@@ -627,6 +642,11 @@ function setupGridDropZone(grid, folderId) {
 
     if (!gridDragTicking) {
       window.requestAnimationFrame(() => {
+        if (!draggedCardEl) {
+          gridDragTicking = false;
+          return;
+        }
+
         const targetCard = getClosestCard(grid, clientX, clientY);
         let insertAction = null;
 
